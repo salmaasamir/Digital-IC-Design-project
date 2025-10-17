@@ -1,0 +1,86 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : SYS_TOP
+Version: K-2015.06
+Date   : Tue Sep 30 21:09:59 2025
+****************************************
+
+Operating Conditions: scmetro_tsmc_cl013g_rvt_ss_1p08v_125c   Library: scmetro_tsmc_cl013g_rvt_ss_1p08v_125c
+Wire Load Model Mode: top
+
+  Startpoint: alu_inst/ALU_OUT_reg[8]
+              (rising edge-triggered flip-flop clocked by ALU_Gated_CLK)
+  Endpoint: alu_inst/ALU_OUT_reg[9]
+            (rising edge-triggered flip-flop clocked by ALU_Gated_CLK)
+  Path Group: ALU_Gated_CLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock ALU_Gated_CLK (rise edge)                         0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  alu_inst/ALU_OUT_reg[8]/CK (SDFFRQX2M)                  0.00       0.00 r
+  alu_inst/ALU_OUT_reg[8]/Q (SDFFRQX2M)                   0.42       0.42 f
+  alu_inst/ALU_OUT_reg[9]/SI (SDFFRQX2M)                  0.00       0.42 f
+  data arrival time                                                  0.42
+
+  clock ALU_Gated_CLK (rise edge)                        20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  clock uncertainty                                      -0.20      19.80
+  alu_inst/ALU_OUT_reg[9]/CK (SDFFRQX2M)                  0.00      19.80 r
+  library setup time                                     -0.52      19.28
+  data required time                                                19.28
+  --------------------------------------------------------------------------
+  data required time                                                19.28
+  data arrival time                                                 -0.42
+  --------------------------------------------------------------------------
+  slack (MET)                                                       18.86
+
+
+  Startpoint: SE (input port clocked by CLK_scan)
+  Endpoint: uart_inst/UART_TX_inst/u_Serializer/ser_data_reg
+            (rising edge-triggered flip-flop clocked by CLK_scan)
+  Path Group: CLK_scan
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK_scan (rise edge)                              0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                   20.00      20.00 r
+  SE (in)                                                 0.72      20.72 r
+  U26/Y (INVXLM)                                          0.18      20.90 f
+  U27/Y (INVXLM)                                          0.58      21.48 r
+  U20/Y (INVXLM)                                          0.16      21.64 f
+  U21/Y (INVXLM)                                          0.10      21.74 r
+  U19/Y (DLY1X1M)                                         0.97      22.72 r
+  uart_inst/test_se (UART_DATA_WIDTH8_test_1)             0.00      22.72 r
+  uart_inst/UART_TX_inst/test_se (UART_TX_DATA_WIDTH8_test_1)
+                                                          0.00      22.72 r
+  uart_inst/UART_TX_inst/u_Serializer/test_se (Serializer_DATA_WIDTH8_test_1)
+                                                          0.00      22.72 r
+  uart_inst/UART_TX_inst/u_Serializer/U47/Y (INVXLM)      0.10      22.81 f
+  uart_inst/UART_TX_inst/u_Serializer/U48/Y (INVXLM)      0.51      23.32 r
+  uart_inst/UART_TX_inst/u_Serializer/ser_data_reg/SE (SDFFSQX1M)
+                                                          0.00      23.32 r
+  data arrival time                                                 23.32
+
+  clock CLK_scan (rise edge)                            100.00     100.00
+  clock network delay (ideal)                             0.00     100.00
+  clock uncertainty                                      -0.20      99.80
+  uart_inst/UART_TX_inst/u_Serializer/ser_data_reg/CK (SDFFSQX1M)
+                                                          0.00      99.80 r
+  library setup time                                     -0.62      99.18
+  data required time                                                99.18
+  --------------------------------------------------------------------------
+  data required time                                                99.18
+  data arrival time                                                -23.32
+  --------------------------------------------------------------------------
+  slack (MET)                                                       75.86
+
+
+1
