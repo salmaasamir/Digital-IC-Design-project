@@ -1,0 +1,168 @@
+#@ # 
+#@ # Running fm_shell Version L-2016.03-SP1 for linux64 -- Apr 13, 2016
+#@ # Date:   Mon Sep 29 02:56:56 2025
+#@ # Run by: IC@IC
+#@ 
+
+source /opt/Synopsys/Formality2016/admin/setup/.synopsys_fm.setup
+#@ # -- Starting source /opt/Synopsys/Formality2016/admin/setup/.synopsys_fm.setup
+
+#@ #
+#@ # .synopsys_fm.setup: Initialization File for Formality
+#@ #
+#@ 
+#@ 
+#@ #
+#@ # Enable stack trace output on fatal.  Not available for all architectures.
+#@ #
+#@ if { $sh_arch == "sparc" || $sh_arch == "sparcOS5" ||      $sh_arch == "hp700" || $sh_arch == "hpux10" } {
+#@   set_unix_variable SYNOPSYS_TRACE ""
+#@ }
+#@ 
+#@ #
+#@ # Variable settings
+#@ #
+#@ set sh_new_variable_message true
+#@ 
+#@ #
+#@ # Synopsys strongly recommends that you uncomment the following command
+#@ # in order to set sh_command_abbrev_mode to the value "Command-Line-Only".
+#@ # Command abbreviation is intended as an interactive convenience.  Using
+#@ # abbreviations in scripts can cause commands to fail in subsequent releases.
+#@ # 
+#@ #set sh_command_abbrev_mode "Command-Line-Only"
+#@ 
+#@ #
+#@ # Some useful aliases
+#@ #
+#@ alias list_commands		help
+#@ 
+#@ #
+#@ # The alias of q to quit is commented out.  Remove the comment 
+#@ # character if you want this alias.  Some users find that having 
+#@ # this particular alias causes problems when mixed with page-mode
+#@ # for reports - an accidental repeated 'q' not only cancels the
+#@ # output but exits the tool.
+#@ #
+#@ #alias q quit
+#@ # -- End source /opt/Synopsys/Formality2016/admin/setup/.synopsys_fm.setup
+
+source -echo -verbose syn_fm_script.tcl
+#@ # -- Starting source syn_fm_script.tcl
+
+#@ 
+#@ ########################### Define Top Module ############################
+#@ 
+#@ set top_module SYS_TOP
+#@ 
+#@ append search_path /home/IC/Projects/SYSTEM/rtl
+#@ 
+#@ ###################################################################
+#@ ########################### Variables #############################
+#@ ###################################################################
+#@ 
+#@ set SSLIB "/home/IC/Projects/SYSTEM/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db"
+#@ set TTLIB "/home/IC/Projects/SYSTEM/std_cells/scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db"
+#@ set FFLIB "/home/IC/Projects/SYSTEM/std_cells/scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db"
+#@ 
+#@ ###################################################################
+#@ ############################ Guidance #############################
+#@ ###################################################################
+#@ 
+#@ # Synopsys setup variable
+#@ 
+#@ set synopsys_auto_setup true
+#@ 
+#@ # Formality Setup File
+#@ 
+#@ set_svf "/home/IC/Projects/SYSTEM/syn/$top_module.svf"
+#@ 
+#@ 
+#@ ###################################################################
+#@ ###################### Reference Container ########################
+#@ ###################################################################
+#@ 
+#@ # Read Reference Design Verilog Files
+#@ 
+#@ read_verilog -container Ref "ALU.v"
+#@ read_verilog -container Ref "PULSE_GEN.v"
+#@ read_verilog -container Ref "FIFO_MEM_CNTRL.v"
+#@ read_verilog -container Ref "FIFO_RD.v"
+#@ read_verilog -container Ref "DF_SYNC.v"
+#@ read_verilog -container Ref "FIFO_WR.v"
+#@ read_verilog -container Ref "ASYNC_FIFO.v"
+#@ read_verilog -container Ref "CLKDIV_MUX.v"
+#@ read_verilog -container Ref "CLK_Divider.v"
+#@ read_verilog -container Ref "CLK_GATE.v"
+#@ read_verilog -container Ref "DATA_SYNC.v"
+#@ read_verilog -container Ref "Register.v"
+#@ read_verilog -container Ref "RST_SYNC.v"
+#@ read_verilog -container Ref "SYS_CTRL.v"
+#@ read_verilog -container Ref "data_sampling.v"
+#@ read_verilog -container Ref "deserializer.v"
+#@ read_verilog -container Ref "edge_bit_counter.v"
+#@ read_verilog -container Ref "parity_check.v"
+#@ read_verilog -container Ref "Stop_check.v"
+#@ read_verilog -container Ref "start_check.v"
+#@ read_verilog -container Ref "UART_RX.v"
+#@ read_verilog -container Ref "FSM_RX.v"
+#@ read_verilog -container Ref "MUX.v"
+#@ read_verilog -container Ref "ParityCalc.v"
+#@ read_verilog -container Ref "serializer.v"
+#@ read_verilog -container Ref "FSM_TX.v"
+#@ read_verilog -container Ref "UART_TX.v"
+#@ read_verilog -container Ref "UART.v"
+#@ read_verilog -container Ref "system_top.v"
+#@ # Read Reference technology libraries
+#@ 
+#@ read_db -container Ref [list $SSLIB $TTLIB $FFLIB]
+#@ 
+#@ # set the top Reference Design
+#@ set_reference_design $top_module
+#@ set_top $top_module
+#@ 
+#@ ###################################################################
+#@ #################### Implementation Container #####################
+#@ ###################################################################
+#@ 
+#@ # Read Implementation Design Files
+#@ read_verilog -container Imp -netlist "/home/IC/Projects/SYSTEM/syn/netlists/$top_module.v"
+#@ 
+#@ read_db -container Imp  "$SSLIB"
+#@ read_db -container Imp "$FFLIB"
+#@ read_db -container Imp "$TTLIB"
+#@ set_implementation_design $top_module
+#@ set_top $top_module
+#@ # Read Implementation technology libraries
+#@ 
+#@ 
+#@ # set the top Implementation Design
+#@ 
+#@ 
+#@ 
+#@ ###################### Matching Compare points ####################
+#@ 
+#@ match
+#@ 
+#@ 
+#@ ######################### Run Verification ########################
+#@ 
+#@ set successful [verify]
+#@ if {!$successful} {
+#@ diagnose
+#@ analyze_points -failing
+#@ }
+#@ 
+#@ ########################### Reporting ############################# 
+#@ report_passing_points > "reports/passing_points.rpt"
+#@ report_failing_points > "reports/failing_points.rpt"
+#@ report_aborted_points > "reports/aborted_points.rpt"
+#@ report_unverified_points > "reports/unverified_points.rpt"
+#@ 
+#@ 
+#@ 
+#@ start_gui
+#@ 
+#@ # -- End source syn_fm_script.tcl
+
+exit
